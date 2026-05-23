@@ -1,12 +1,19 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment
 #,,CTLV2, sensoCOMFORT VRC 720/2 (SW 0514),,,,,,,,,,
+
+# Version Conditions
+*[ctlv1],scan,,,SW,,0122
+*[ctlv2],scan,,,SW,,0514
+*[ctlv2+],scan,,,SW,,>0122
+*[ctlv3],scan,,,SW,,0709
+
 # ##### General #####,,,,,,,,,,,,,
 *r,,,,,,B524,02000000,,,IGN:4,,,
 *w,,,,,,B524,02010000,,,,,,
 r,,HwcBivalencePoint,,,,,0100,,,tempv,,,Bivalence point hot water heating
 r;w,,ContinousHeating,continous heating,,,,0200,,,tempv,,,"-26=off, when the outside temperature falls below this threshold temperature the continuous heating function is started (off <=> function is disabled)"
 r;w,,FrostOverrideTime,frost delay time,,,,0300,,,hoursum2,,,delay before frost protection is activated
-r,,xUnknown04,(constant 0),,,,0400,,,UIN,,,
+[ctlv2+]r,,xUnknown04,(constant 0),,,,0400,,,UIN,,,
 r;w,,GlobalSystemOff,Global System OFF,,,,0700,,,yesno,,,For switching system off
 r,,xUnknown08,(constant off),,,,0800,,,onoff,,,
 r,,xUnknown09,"(constant off, on in cooling mode)",,,,0900,,,onoff,,,
@@ -66,12 +73,12 @@ r;w,,PrFuelSumHcLastMonth,last months fuel consumption heating,,,,5200,,,energy4
 r;w,,PrEnergySumHcLastMonth,last months energy consumption heating,,,,5300,,,energy4,,,last month electricity consumption heating
 r;w,,PrEnergySumHwcLastMonth,last months energy consumption hot water,,,,5400,,,energy4,,,last month electricity consumption hot water
 r;w,,PrFuelSumHwcLastMonth,last months fuel consumption hot water,,,,5500,,,energy4,,,last month fuel consumption hot water
-r;w,,PrFuelSumHc,total fuel consumption heating,,,,5600,,,energy4,,,total year fuel consumption heating
+[ctlv2+]r;w,,PrFuelSumHc,total fuel consumption heating,,,,5600,,,energy4,,,total year fuel consumption heating
 r;w,,PrEnergySumHc,total energy consumption heating,,,,5700,,,energy4,,,total year electricity consumption heating
 r;w,,PrEnergySumHwc,total energy consumption hot water,,,,5800,,,energy4,,,total year electricity consumption hot water
 r;w,,PrFuelSumHwc,total fuel consumption hot water,,,,5900,,,energy4,,,total year fuel consumption hot water
-r;w,,PrEnergySum,total energy consumption,,,,5C00,,,energy4,,,total year electricity consumption
-r;w,,PrFuelSum,total fuel consumption,,,,5D00,,,energy4,,,total year fuel consumption
+[ctlv2+]r;w,,PrEnergySum,total energy consumption,,,,5C00,,,energy4,,,total year electricity consumption
+[ctlv2+]r;w,,PrFuelSum,total fuel consumption,,,,5D00,,,energy4,,,total year fuel consumption
 r,,xUnknown60,"(constant 12, 0 in cooling mode)",,,,6000,,,SIN,,,
 r,,xUnknown61,(constant 0),,,,6100,,,SIN,,,
 r,,xUnknown65,(constant 0),,,,6500,,,SIN,,,
@@ -182,10 +189,10 @@ r,,xUnknownF7,(constant 0),,,,F700,,,onoff,,,
 r,,xUnknownF8,(constant 0),,,,F800,,,onoff,,,
 r,,xUnknownF9,(constant 0),,,,F900,,,onoff,,,
 r,,xUnknownFA,(constant 0),,,,FA00,,,onoff,,,
-r,,xUnknownFB,(constant 10),,,,FB00,,,EXP,,,
-r,,xUnknownFC,(constant 62),,,,FC00,,,EXP,,,
-r,,xUnknownFE,(constant 13),,,,FE00,,,EXP,,,
-r,,xUnknownFF,(constant 25),,,,FF00,,,EXP,,,
+[ctlv2+]r,,xUnknownFB,(constant 10),,,,FB00,,,EXP,,,
+[ctlv2+]r,,xUnknownFC,(constant 62),,,,FC00,,,EXP,,,
+[ctlv2+]r,,xUnknownFE,(constant 13),,,,FE00,,,EXP,,,
+[ctlv2+]r,,xUnknownFF,(constant 25),,,,FF00,,,EXP,,,
 # ##### Room humidity #####,,,,,,,,,,,,,
 *r,,,,,,B524,06000901,,,IGN:4,,,
 r,,RoomHumidity,room humidity shown by regulator,,,,0700,,,exp,,,room humidity shown by regulator
@@ -241,11 +248,11 @@ r,,HwcStatus,,,,,0F00,,,zoneStatus,,,
 r;w,,HwcHolidayStartTime,,,,,1000,,,HTI,,,
 r;w,,HwcHolidayEndTime,,,,,1100,,,HTI,,,
 r,,HwcUnknown12,(constant 0),,,,1200,,,onoff,,,
-r,,HwcUnknown13,(constant 0),,,,1300,,,onoff,,,
+[ctlv2+]r,,HwcUnknown13,(constant 0),,,,1300,,,onoff,,,
 # ##### heating circuit 1 #####,,,,,,,,,,,,,
 *r,,,,,,B524,02000200,,,IGN:4,,,
 *w,,,,,,B524,02010200,,,,,,
-r;w,,Hc1Unknown00,,,,,0000,,,HEX:*,,,
+[ctlv2+]r;w,,Hc1Unknown00,,,,,0000,,,HEX:*,,,
 r;w,,Hc1Unknown01,,,,,0100,,,HEX:*,,,
 r,,Hc1CircuitType,CircuitType Heating Circuit 1,,,,0200,,,mctype;IGN:1,,,
 r;w,,Hc1DesiredReturnTemp,target return temperature Hc1,,,,0400,,,tempv,,,temperature for the increase in return circuit (default 30)
@@ -276,7 +283,7 @@ r,,Hc1HeatCurveAdaption,Adaptive Heatcurve Heating Circuit 1,,,,1C00,,,EXP,,,ada
 r;w,,Hc1Unknown1D,(constant off),,,,1D00,,,onoff,,,
 r,,Hc1PumpStatus,PumpStatus Hc1,,,,1E00,,,hcpumpstate,,,pump status of Hc1
 r;w,,Hc1Unknown1F,(konstant 4),,,,1F00,,,EXP,,,
-r;w,,Hc1Unknown20,"(constant 1, 2 in ccoling mode)",,,,2000,,,onoff,,,
+[ctlv2+]r;w,,Hc1Unknown20,"(constant 1, 2 in ccoling mode)",,,,2000,,,onoff,,,
 # only 'invalid position' messages for higher registers
 # ##### heating circuit 2 #####,,,,,,,,,,,,,
 *r,,,,,,B524,02000201,,,IGN:4,,,
@@ -341,7 +348,7 @@ r,,Hc3PumpStatus,PumpStatus Hc3,,,,1E00,,,hcpumpstate,,,pump status of Hc3
 # ##### zone 1 #####,,,,,,,,,,,,,
 *r,,,,,,B524,02000300,,,IGN:4,,,
 *w,,,,,,B524,02010300,,,,,,
-r;w,,z1Unknown00,,,,,0000,,,HEX:*,,,
+[ctlv2+]r;w,,z1Unknown00,,,,,0000,,,HEX:*,,,
 r;w,,z1OpModeCooling,Cooling OpMode Zone 1,,,,0100,,,opmode2,,,Cooling operation mode of zone 1
 r;w,,z1CoolingRoomTempDesiredTimeControlled,Desired Cooling Room Temperature Zone 1 time controlled,,,,0200,,,tempv,,,manual controlled desired cooling room temperature for zone 1
 r;w,,z1HolidayStartDate,,,,,0300,,,hfrom,,,start date of holidays for zone 1
@@ -376,11 +383,11 @@ r;w,,z1QuickVetoDuration,Duration of Quick Veto mode in Hours Zone 1,,,,2600,,,E
 r,,z1Unknown27,,,,,2700,,,HEX:*,,,
 r,,z1RoomHumidity,,,,,2800,,,EXP,,%,room humidity zone 1
 r,,z1Unknown29,,,,,2900,,,HEX:*,,,
-r,,z1Unknown2A,,,,,2A00,,,HEX:*,,,
-r,,z1Unknown2B,,,,,2B00,,,HEX:*,,,
-r,,z1Unknown2C,,,,,2C00,,,HEX:*,,,
-r,,z1Unknown2D,,,,,2D00,,,HEX:*,,,1 when off 0 during time controlled period and HP active (and 1 during time controlled period and HP inactive)
-r,,z1Unknown2E,,,,,2E00,,,HEX:*,,,
+[ctlv2+]r,,z1Unknown2A,,,,,2A00,,,HEX:*,,,
+[ctlv2+]r,,z1Unknown2B,,,,,2B00,,,HEX:*,,,
+[ctlv2+]r,,z1Unknown2C,,,,,2C00,,,HEX:*,,,
+[ctlv2+]r,,z1Unknown2D,,,,,2D00,,,HEX:*,,,1 when off 0 during time controlled period and HP active (and 1 during time controlled period and HP inactive)
+[ctlv2+]r,,z1Unknown2E,,,,,2E00,,,HEX:*,,,
 # only 'invalid position' messages for higher registers
 # ##### zone 2 #####,,,,,,,,,,,,,
 *r,,,,,,B524,02000301,,,IGN:4,,,
